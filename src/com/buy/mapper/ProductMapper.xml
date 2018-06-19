@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.buy.mapper.ProductMapper" >
+  <resultMap id="BaseResultMap" type="com.buy.pojo.Product" >
+    <id column="pid" property="pid" jdbcType="VARCHAR" />
+    <result column="pname" property="pname" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="INTEGER" />
+    <result column="olderprice" property="olderprice" jdbcType="INTEGER" />
+    <result column="des" property="des" jdbcType="VARCHAR" />
+    <result column="img1" property="img1" jdbcType="VARCHAR" />
+    <result column="img2" property="img2" jdbcType="VARCHAR" />
+    <result column="img3" property="img3" jdbcType="VARCHAR" />
+    <result column="img4" property="img4" jdbcType="VARCHAR" />
+    <result column="category" property="category" jdbcType="VARCHAR" />
+    <result column="sales" property="sales" jdbcType="INTEGER" />
+    <result column="sku" property="sku" jdbcType="INTEGER" />
+    <result column="score" property="score" jdbcType="INTEGER" />
+    <result column="startime" property="startime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    pid, pname, price, olderprice, des, img1, img2, img3, img4, category, sales, sku, 
+    score, startime
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.buy.pojo.ProductExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from product
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from product
+    where pid = #{pid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from product
+    where pid = #{pid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.buy.pojo.ProductExample" >
+    delete from product
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.buy.pojo.Product" >
+    insert into product (pid, pname, price, 
+      olderprice, des, img1, 
+      img2, img3, img4, category, 
+      sales, sku, score, 
+      startime)
+    values (#{pid,jdbcType=VARCHAR}, #{pname,jdbcType=VARCHAR}, #{price,jdbcType=INTEGER}, 
+      #{olderprice,jdbcType=INTEGER}, #{des,jdbcType=VARCHAR}, #{img1,jdbcType=VARCHAR}, 
+      #{img2,jdbcType=VARCHAR}, #{img3,jdbcType=VARCHAR}, #{img4,jdbcType=VARCHAR}, #{category,jdbcType=VARCHAR}, 
+      #{sales,jdbcType=INTEGER}, #{sku,jdbcType=INTEGER}, #{score,jdbcType=INTEGER}, 
+      #{startime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.buy.pojo.Product" >
+    insert into product
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pid != null" >
+        pid,
+      </if>
+      <if test="pname != null" >
+        pname,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="olderprice != null" >
+        olderprice,
+      </if>
+      <if test="des != null" >
+        des,
+      </if>
+      <if test="img1 != null" >
+        img1,
+      </if>
+      <if test="img2 != null" >
+        img2,
+      </if>
+      <if test="img3 != null" >
+        img3,
+      </if>
+      <if test="img4 != null" >
+        img4,
+      </if>
+      <if test="category != null" >
+        category,
+      </if>
+      <if test="sales != null" >
+        sales,
+      </if>
+      <if test="sku != null" >
+        sku,
+      </if>
+      <if test="score != null" >
+        score,
+      </if>
+      <if test="startime != null" >
+        startime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pid != null" >
+        #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="pname != null" >
+        #{pname,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=INTEGER},
+      </if>
+      <if test="olderprice != null" >
+        #{olderprice,jdbcType=INTEGER},
+      </if>
+      <if test="des != null" >
+        #{des,jdbcType=VARCHAR},
+      </if>
+      <if test="img1 != null" >
+        #{img1,jdbcType=VARCHAR},
+      </if>
+      <if test="img2 != null" >
+        #{img2,jdbcType=VARCHAR},
+      </if>
+      <if test="img3 != null" >
+        #{img3,jdbcType=VARCHAR},
+      </if>
+      <if test="img4 != null" >
+        #{img4,jdbcType=VARCHAR},
+      </if>
+      <if test="category != null" >
+        #{category,jdbcType=VARCHAR},
+      </if>
+      <if test="sales != null" >
+        #{sales,jdbcType=INTEGER},
+      </if>
+      <if test="sku != null" >
+        #{sku,jdbcType=INTEGER},
+      </if>
+      <if test="score != null" >
+        #{score,jdbcType=INTEGER},
+      </if>
+      <if test="startime != null" >
+        #{startime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.buy.pojo.ProductExample" resultType="java.lang.Integer" >
+    select count(*) from product
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update product
+    <set >
+      <if test="record.pid != null" >
+        pid = #{record.pid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pname != null" >
+        pname = #{record.pname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.price != null" >
+        price = #{record.price,jdbcType=INTEGER},
+      </if>
+      <if test="record.olderprice != null" >
+        olderprice = #{record.olderprice,jdbcType=INTEGER},
+      </if>
+      <if test="record.des != null" >
+        des = #{record.des,jdbcType=VARCHAR},
+      </if>
+      <if test="record.img1 != null" >
+        img1 = #{record.img1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.img2 != null" >
+        img2 = #{record.img2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.img3 != null" >
+        img3 = #{record.img3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.img4 != null" >
+        img4 = #{record.img4,jdbcType=VARCHAR},
+      </if>
+      <if test="record.category != null" >
+        category = #{record.category,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sales != null" >
+        sales += #{record.sales,jdbcType=INTEGER},
+      </if>
+      <if test="record.sku != null" >
+        sku -= #{record.sku,jdbcType=INTEGER},
+      </if>
+      <if test="record.score != null" >
+        score = #{record.score,jdbcType=INTEGER},
+      </if>
+      <if test="record.startime != null" >
+        startime = #{record.startime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update product
+    set pid = #{record.pid,jdbcType=VARCHAR},
+      pname = #{record.pname,jdbcType=VARCHAR},
+      price = #{record.price,jdbcType=INTEGER},
+      olderprice = #{record.olderprice,jdbcType=INTEGER},
+      des = #{record.des,jdbcType=VARCHAR},
+      img1 = #{record.img1,jdbcType=VARCHAR},
+      img2 = #{record.img2,jdbcType=VARCHAR},
+      img3 = #{record.img3,jdbcType=VARCHAR},
+      img4 = #{record.img4,jdbcType=VARCHAR},
+      category = #{record.category,jdbcType=VARCHAR},
+      sales = #{record.sales,jdbcType=INTEGER},
+      sku = #{record.sku,jdbcType=INTEGER},
+      score = #{record.score,jdbcType=INTEGER},
+      startime = #{record.startime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.buy.pojo.Product" >
+    update product
+    <set >
+      <if test="pname != null" >
+        pname = #{pname,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=INTEGER},
+      </if>
+      <if test="olderprice != null" >
+        olderprice = #{olderprice,jdbcType=INTEGER},
+      </if>
+      <if test="des != null" >
+        des = #{des,jdbcType=VARCHAR},
+      </if>
+      <if test="img1 != null" >
+        img1 = #{img1,jdbcType=VARCHAR},
+      </if>
+      <if test="img2 != null" >
+        img2 = #{img2,jdbcType=VARCHAR},
+      </if>
+      <if test="img3 != null" >
+        img3 = #{img3,jdbcType=VARCHAR},
+      </if>
+      <if test="img4 != null" >
+        img4 = #{img4,jdbcType=VARCHAR},
+      </if>
+      <if test="category != null" >
+        category = #{category,jdbcType=VARCHAR},
+      </if>
+      <if test="sales != null" >
+        sales = sales + #{sales,jdbcType=INTEGER},
+      </if>
+      <if test="sku != null" >
+        sku = sku -#{sku,jdbcType=INTEGER},
+      </if>
+      <if test="score != null" >
+        score = #{score,jdbcType=INTEGER},
+      </if>
+      <if test="startime != null" >
+        startime = #{startime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where pid = #{pid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.buy.pojo.Product" >
+    update product
+    set pname = #{pname,jdbcType=VARCHAR},
+      price = #{price,jdbcType=INTEGER},
+      olderprice = #{olderprice,jdbcType=INTEGER},
+      des = #{des,jdbcType=VARCHAR},
+      img1 = #{img1,jdbcType=VARCHAR},
+      img2 = #{img2,jdbcType=VARCHAR},
+      img3 = #{img3,jdbcType=VARCHAR},
+      img4 = #{img4,jdbcType=VARCHAR},
+      category = #{category,jdbcType=VARCHAR},
+      sales = #{sales,jdbcType=INTEGER},
+      sku = #{sku,jdbcType=INTEGER},
+      score = #{score,jdbcType=INTEGER},
+      startime = #{startime,jdbcType=TIMESTAMP}
+    where pid = #{pid,jdbcType=VARCHAR}
+  </update>
+</mapper>
